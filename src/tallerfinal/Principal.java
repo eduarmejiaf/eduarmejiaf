@@ -1,11 +1,13 @@
 package tallerfinal;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Principal {
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int msg = 0, opc = 0, cantidad = 0, indexComunidades = 0, indexProfesores = 0, indexEstudiantes = 0, indexAsignaturas = 0, indexMatriculas = 0, tvec = 0, cantidadComunidades = 0;
         int validar = 0, cantidadProfesores = 0, cantidadEstudiantes = 0, cantidadMatriculas = 0, cantidadAsignaturas = 0;
         String nombre = "";
@@ -20,22 +22,21 @@ public class Principal {
         System.out.println("Digite la opción que desea realizar: ");
         while (opc != 8) {
             System.out.println("1.Ingreso de comunidad\n2.Ingreso de profesor\n3.Ingreso de estudiante\n4.Ingreso de asignaturas\n5.Listados\n6.Proceso de matricula\n7.Consultas");
-            opc = sc.nextInt();
+            opc = Integer.parseInt(br.readLine());
             switch (opc) {
                 case 1:
 
                     System.out.println("Ingrese la cantidad de personas que desea registrar en la comunidad. ");
                     int i = 0,
                      validarComunidad = 0;
-                    cantidad = sc.nextInt();
-                    sc.nextLine();
+                    cantidad = Integer.parseInt(br.readLine());
                     while (i < cantidad) {
                         int swC = 0;
                         validarComunidad = 0;
                         do {
                             swC = 0;
                             System.out.println("Ingrese la cédula de la persona:  " + (cantidadComunidades + 1));
-                            cedula = sc.nextLine();
+                            cedula = br.readLine();
 
                             validarComunidad = validarComunidad(cedula, cantidadComunidades, comunidades);
 
@@ -43,7 +44,7 @@ public class Principal {
                                 System.out.println("La cédula ya existe en la comunidad, intente nuevamente.");
                             } else {
                                 System.out.println("Ingrese el nombre de la persona:  " + (cantidadComunidades + 1));
-                                nombre = sc.nextLine();
+                                nombre = br.readLine();
                                 comunidades[cantidadComunidades] = new Comunidad(cedula, nombre);
                                 validarComunidad++;
                                 swC = 1;
@@ -58,19 +59,20 @@ public class Principal {
                     break;
                 case 2:
                     int swP = 0;
+                    System.out.println("HOLA");
                     System.out.println("Ingrese cedula del profesor: " + (cantidadProfesores + 1));
-                    cedula = sc.nextLine();
-                    sc.nextLine();
-                    validar = validarComunidad(cedula, cantidadComunidades, comunidades);
+                    String pene = br.readLine();
+                    System.out.println("PASE POR AQUI");
+                    validar = validarComunidad(pene, cantidadComunidades, comunidades);
                     if (validar < cantidadComunidades) {
-                        int validarProfesores = validarProfesores(profesores, cantidadProfesores, cedula);
+                        int validarProfesores = validarProfesores(profesores, cantidadProfesores, pene);
                         if (validarProfesores >= cantidadProfesores) {
                             nombre = comunidades[validar].getNombre();
                             System.out.println("Ingrese la profesión del profesor" + (cantidadProfesores + 1));////
-                            profesion = sc.nextLine();
+                            profesion = br.readLine();
                             System.out.println("Ingrese la categoria del profesor " + (cantidadProfesores + 1));///
-                            categoria = sc.nextLine();
-                            profesores[cantidadProfesores] = new Profesores(cedula, nombre, profesion, categoria);
+                            categoria = br.readLine();
+                            profesores[cantidadProfesores] = new Profesores(pene, nombre, profesion, categoria);
                             validar = cantidadComunidades;
                             swP = 1;
                         } else {
@@ -95,8 +97,7 @@ public class Principal {
                     System.out.println("Listados");
                     while (submenu != 5) {
                         System.out.println("1)Listado Comunidad\n2)Listado Profesores\n3)Listado de Estudiantes\n4)Listado de Asignaturas\n5)Volver al menú principal");
-                        submenu = sc.nextInt();
-                        sc.nextLine();
+                        submenu = Integer.parseInt(br.readLine());
                         switch (submenu) {
                             case 1:
                                 if (comunidades[0] == null) {
